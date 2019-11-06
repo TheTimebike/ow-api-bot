@@ -1,6 +1,6 @@
 import api, discord
 from discord.utils import get as get_role
-import auth
+import auth, json
 client = discord.Client()
 
 class StatServer:
@@ -21,14 +21,29 @@ async def on_message(message):
     serv = StatServer(message.author.server)
     config = serv.config.load()
 
+    if serv.config.load()["members"].get(message.author.id, None) == None:
+        new_members = serv.config.load()["members"]
+        new_members[message.author.id] = [None, None]
+        serv.config.update("members", new_members)
+
     if message.content.lower().startswith(".register "):
         username = message.content[len(".register "):]
         new_members = serv.config.load()["members"]
-        new_members[message.author.id] = username.replace("#", "-")
+        new_members[message.author.id][0] = username.replace("#", "-")
         serv.config.update("members", new_members)
         await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(username))
 
-    elif message.content.lower().startswith(".config achievement "):
+    if message.content.lower().startswith(".platform "):
+        platform = message.content.lower()[len(".register "):]
+        if platform not in ["pc", "psn", "xbl"]:
+            await client.send_message(message.channel, "Please select a platform from the following :\n**PC**, **PSN** or **XBL**")
+            return
+        new_members = serv.config.load()["members"]
+        new_members[message.author.id][1] = platform
+        serv.config.update("members", new_members)
+        await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(platform))
+
+    if message.content.lower().startswith(".config achievement "):
         achievements = message.content.lower()[len(".config achievement "):].replace(" "+message.role_mentions[0].mention, "").split(", ")
         for achievement in achievements:
             if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"]:
@@ -123,8 +138,9 @@ async def on_message(message):
         embed.set_footer(text="Made by u/TheTimebike")
         await client.send_message(message.channel, embed=embed)
 
-    elif config["members"].get(message.author.id, None) != None:
-        stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id]))
+    elif config["members"][message.author.id][0] != None:
+        stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+        print(json.dumps(stats, indent=4))
         rank = stats[config["region"]]["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
         to_remove, ranks = [], ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]
         for rank_name in ranks:
@@ -135,12 +151,12 @@ async def on_message(message):
             await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
         await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
 
-        achievements = api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id]))
+        achievements = api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         for role, achievement_block in achievements[config["region"]]["achievements"].items():
             for achievement, state in achievement_block.items():
-                if state == True:
+                if state == True and config.get(achievement, None) != None:
                     await client.add_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
-                if state == False:
+                if state == False and config.get(achievement, None) != None:
                     await client.remove_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
 
 client.run(auth.token)
