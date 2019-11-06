@@ -28,6 +28,16 @@ async def on_message(message):
         serv.config.update("members", new_members)
         await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(username))
 
+    elif message.content.lower().startswith(".config achievement "):
+        achievements = message.content.lower()[len(".config achievement "):].split(", ")
+        for achievement in achievements:
+            if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"]:
+                await client.send_message(message.channel, "Achievement {0} found!".format(achievement.title()))
+                serv.config.update(achievement.replace(" ", "_"), message.role_mentions[0].id)
+            else:
+                await client.send_message(message.channel, "Achievement {0} not found!".format(achievement.title()))
+        print(achievements)
+
     elif message.content.lower().startswith(".config region "):
         new_region = message.content.lower()[len(".config region "):]
         if new_region not in ["kr", "eu", "us"]:
