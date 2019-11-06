@@ -43,8 +43,7 @@ class Config:
 
     def update(self, key, attr):
         conf = self.load()
-        if key in conf.keys():
-            conf[key] = attr
+        conf[key] = attr
         self.save(conf)
 
     def get_conversion_table(self, table):

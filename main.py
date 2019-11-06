@@ -29,7 +29,7 @@ async def on_message(message):
         await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(username))
 
     elif message.content.lower().startswith(".config achievement "):
-        achievements = message.content.lower()[len(".config achievement "):].split(", ")
+        achievements = message.content.lower()[len(".config achievement "):].replace(" "+message.role_mentions[0].mention, "").split(", ")
         for achievement in achievements:
             if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"]:
                 await client.send_message(message.channel, "Achievement {0} found!".format(achievement.title()))
@@ -134,5 +134,13 @@ async def on_message(message):
         for _ in to_remove:
             await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
         await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
+
+        achievements = api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id]))
+        for role, achievement_block in achievements[config["region"]]["achievements"].items():
+            for achievement, state in achievement_block.items():
+                if state == True:
+                    await client.add_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
+                if state == False:
+                    await client.remove_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
 
 client.run(auth.token)
