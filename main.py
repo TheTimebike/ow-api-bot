@@ -7,11 +7,7 @@ class StatServer:
     def __init__(self, server):
         self.server = server
         self.config = api.Config("ow-configs", self.server.id)
-
-#api.Api().get(api.STATS_ROUTE.format("TheTimebike-2349"))
-#serv = StatServer("123")
-#serv.config.update("role", "support")
-
+        
 @client.event
 async def on_server_join(server):
     statserv = StatServer(server)
@@ -44,13 +40,14 @@ async def on_message(message):
         await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(platform))
 
     if message.content.lower().startswith(".config achievement "):
-        achievements = message.content.lower()[len(".config achievement "):].replace(" "+message.role_mentions[0].mention, "").split(", ")
+        achievements = message.content.lower()[len(".config achievement "):].split(", ")
         for achievement in achievements:
             if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"]:
-                await client.send_message(message.channel, "Achievement {0} found!".format(achievement.title()))
-                serv.config.update(achievement.replace(" ", "_"), message.role_mentions[0].id)
+                new_role_obj = await client.create_role(message.author.server, name=achievement.title())
+                serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
+                await client.send_message(message.channel, "I will give the {0} role for the achievement: {1}!".format(new_role_obj.name, achievement.title()))
             else:
-                await client.send_message(message.channel, "Achievement {0} not found!".format(achievement.title()))
+                await client.send_message(message.channel, "Achievement {0} not found! Please check spelling and try again".format(achievement.title()))
         print(achievements)
 
     elif message.content.lower().startswith(".config time "):
@@ -82,28 +79,23 @@ async def on_message(message):
         await client.send_message(message.channel, "Config Updated! Your new role is **{0}**.".format(new_role.title()))
 
     elif message.content.lower().startswith(".config rank roles "):
-        bronze_id = message.role_mentions[0].id
-        serv.config.update("bronze_id", bronze_id)
-
-        silver_id = message.role_mentions[1].id
-        serv.config.update("silver_id", silver_id)
-
-        gold_id = message.role_mentions[2].id
-        serv.config.update("gold_id", gold_id)
-
-        platinum_id = message.role_mentions[3].id
-        serv.config.update("platinum_id", platinum_id)
+        bronze_role_obj = await client.create_role(message.author.server, name="Bronze")
+        silver_role_obj = await client.create_role(message.author.server, name="Silver)
+        gold_role_obj = await client.create_role(message.author.server, name="Gold")
+        platinum_role_obj = await client.create_role(message.author.server, name="Platinum")
+        diamond_role_obj = await client.create_role(message.author.server, name="Diamond")
+        master_role_obj = await client.create_role(message.author.server, name="Master")
+        grandmaster_role_obj = await client.create_role(message.author.server, name="Grandmaster")
         
-        diamond_id = message.role_mentions[4].id
-        serv.config.update("diamond_id", diamond_id)
+        serv.config.update("bronze_id", bronze_role_obj.id)
+        serv.config.update("silver_id", silver_role_obj.id)
+        serv.config.update("gold_id", gold_role_obj.id)
+        serv.config.update("platinum_id", platinum_role_obj.id)
+        serv.config.update("diamond_id", diamond_role_obj.id)
+        serv.config.update("master_id", master_role_obj.id)
+        serv.config.update("grandmaster_id", grandmaster_role_obj.id)
 
-        master_id = message.role_mentions[5].id
-        serv.config.update("master_id", master_id)
-
-        grandmaster_id = message.role_mentions[6].id
-        serv.config.update("grandmaster_id", grandmaster_id)
-
-        await client.send_message(message.channel, "Config Updated! Those roles have been set for the competitive rank roles.")
+        await client.send_message(message.channel, "Config Updated! New roles have been created for the competitive rank roles.")
 
     elif message.content.lower().startswith(".config bronze "):
         role_id = message.role_mentions[0].id
