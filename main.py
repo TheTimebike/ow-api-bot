@@ -1,6 +1,7 @@
 import api, discord
 from discord.utils import get as get_role
 import auth, json
+from time import sleep
 client = discord.Client()
 
 class StatServer:
@@ -35,7 +36,7 @@ async def on_message(message):
         await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(username))
 
     if message.content.lower().startswith(".platform "):
-        platform = message.content.lower()[len(".register "):]
+        platform = message.content.lower()[len(".platform "):]
         if platform not in ["pc", "psn", "xbl"]:
             await client.send_message(message.channel, "Please select a platform from the following :\n**PC**, **PSN** or **XBL**")
             return
@@ -189,26 +190,30 @@ async def on_message(message):
         await client.send_message(message.channel, embed=embed)
 
     elif config["members"][message.author.id][0] != None:
-        stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
-        rank = stats["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
-        to_remove, ranks = [], ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]
-        for rank_name in ranks:
-            if rank_name.lower() != rank.lower():
-                to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
+        try:
+            stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+            rank = stats["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
+            if rank != None:
+                to_remove, ranks = [], ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]
+                for rank_name in ranks:
+                    if rank_name.lower() != rank.lower():
+                        to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
+            for _ in to_remove:
+                await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
+            await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
+        except:
+            pass
 
-        for _ in to_remove:
-            await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
-        await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
-
-        achievements = api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+        #sleep(2)
+        achievements = stats#api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         for role, achievement_block in achievements["achievements"].items():
             for achievement, state in achievement_block.items():
                 if state == True and config.get(achievement, None) != None:
                     await client.add_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
                 if state == False and config.get(achievement, None) != None:
                     await client.remove_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
-
-        playtime = api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+        #sleep(2)
+        playtime = stats#api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         for hero, playtime_block in config["time"].items():
             overall_hero_playtime = playtime["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["heroes"]["playtime"]["competitive"].get(hero, 0)
             for key, attr in playtime_block.items():

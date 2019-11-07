@@ -4,7 +4,7 @@ import requests as _requests
 from os import path, makedirs
 
 BASE_ROUTE = "https://owapi.net/api/v3"
-STATS_ROUTE = "https://owapi.net/api/v3/u/{0}/stats?platform={1}"
+STATS_ROUTE = "https://owapi.net/api/v3/u/{0}/blob?platform={1}"
 HEROES_ROUTE = "https://owapi.net/api/v3/u/{0}/heroes?platform={1}"
 ACHIEVEMENT_ROUTE = "https://owapi.net/api/v3/u/{0}/achievements?platform={1}"
 
@@ -72,6 +72,14 @@ class Api:
         }
 
     def get(self, request):
-        self._requestData = _requests.get(urllib.parse.quote(request, safe=':/?&=,.'), headers=self.headers)
-        _data = self._requestData.json().get("eu", self._requestData.json().get("us", self._requestData.json().get("kr", {})))
-        return _data
+        try:
+            self._requestData = _requests.get(urllib.parse.quote(request, safe=':/?&=,.'), headers=self.headers)
+            _data = self._requestData.json().get("eu", self._requestData.json().get("us", self._requestData.json().get("kr", None)))
+            if _data == None:
+                print(self._requestData)
+                print(self._requestData.json())
+                return None
+            return _data
+        except Exception as ex:
+            print(ex)
+            print(self._requestData)
