@@ -119,8 +119,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "the floor is lava",
+      "supersonic"
     ]
   },
   "mcree": {
@@ -129,8 +129,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "whoa there",
+      "its high noon"
     ]
   },
   "mei": {
@@ -170,7 +170,7 @@
       "projectile"
     ],
     "achievements": [
-      "",
+      "supercharged",
       ""
     ]
   },
@@ -190,8 +190,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "die die die die",
+      "clearing the area"
     ]
   },
   "reinhardt": {
@@ -211,7 +211,7 @@
       "hitscan"
     ],
     "achievements": [
-      "",
+      "roadkill",
       ""
     ]
   },
@@ -242,7 +242,7 @@
       "hitscan"
     ],
     "achievements": [
-      "",
+      "hack the planet",
       ""
     ]
   },
@@ -273,7 +273,7 @@
       "hitscan"
     ],
     "achievements": [
-      "",
+      "total recall",
       ""
     ]
   },
