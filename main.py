@@ -44,7 +44,7 @@ async def on_message(message):
         serv.config.update("members", new_members)
         await client.send_message(message.channel, "Config Updated! Your account is now bound to **{0}**".format(platform))
 
-    if message.content.lower().startswith(".config achievement "):
+    if message.content.lower().startswith(".config achievement ") and message.author.server_permissions.administrator:
         achievements = message.content.lower()[len(".config achievement "):].split(", ")
         achievement_conversion_table = serv.config.get_conversion_table("hero_details")
         for achievement in achievements:
@@ -66,7 +66,7 @@ async def on_message(message):
                         serv.config.update(achievement_new.replace(" ", "_"), new_role_obj.id)
                         await client.send_message(message.channel, "Created role for achievement {0}".format(achievement_new.title()))   
 
-    elif message.content.lower().startswith(".config disable achievement "):
+    elif message.content.lower().startswith(".config disable achievement ") and message.author.server_permissions.administrator:
         achievements_to_disable = message.content.lower()[len(".config disable achievement "):].split(", ")
         achievement_conversion_table = serv.config.get_conversion_table("hero_details")
         for achievement in achievements_to_disable:
@@ -95,7 +95,7 @@ async def on_message(message):
                     serv.config.delete_achievement(achievement_new.replace(" ", "_"))
                     await client.send_message(message.channel, "The achievement {0} will no longer give a role!".format(achievement_new.title()))   
 
-    elif message.content.lower().startswith(".config time "):
+    elif message.content.lower().startswith(".config time ") and message.author.server_permissions.administrator:
         arg = message.content.lower()[len(".config time "):].split(", ")
         time = arg[1]
         hero = arg[0]
@@ -105,8 +105,9 @@ async def on_message(message):
             config["time"][hero] = {}
         config["time"][hero][time] = new_role_obj.id
         serv.config.update("time", config["time"])
+        await client.send_message(message.channel, "The {0} hours playtime role for {1} has been created.".format(time, hero.title()))
 
-    elif message.content.lower().startswith(".config disable time "):
+    elif message.content.lower().startswith(".config disable time ") and message.author.server_permissions.administrator:
         arg = message.content.lower()[len(".config disable time "):].split(", ")
         time = arg[1]
         hero = arg[0]
@@ -116,16 +117,7 @@ async def on_message(message):
         else:
             await client.send_message(message.channel, "The {0} hours playtime role for {1} was not found, please check your spelling and try again".format(time, hero.title()))
         
-    elif message.content.lower().startswith(".config region "):
-        new_region = message.content.lower()[len(".config region "):]
-        if new_region not in ["kr", "eu", "us"]:
-            await client.send_message(message.channel, "Please select a region from the following: \n**KR**, **EU** or **US**.")
-            return
-        serv.config.update("region", new_region)
-        await client.send_message(message.channel, "Config Updated! Your new region is **{0}**.".format(new_region.upper()))
-
-
-    elif message.content.lower().startswith(".config role "):
+    elif message.content.lower().startswith(".config role ") and message.author.server_permissions.administrator:
         new_role = message.content.lower()[len(".config role "):]
         if new_role not in ["support", "tank", "damage"]:
             await client.send_message(message.channel, "Please select a role from the following: \n**SUPPORT**, **TANK** or **DAMAGE**.")
@@ -133,7 +125,7 @@ async def on_message(message):
         serv.config.update("role", new_role)
         await client.send_message(message.channel, "Config Updated! Your new role is **{0}**.".format(new_role.title()))
 
-    elif message.content.lower().startswith(".config rank roles"):
+    elif message.content.lower().startswith(".config rank roles") and message.author.server_permissions.administrator:
         bronze_role_obj = await client.create_role(message.author.server, name="Bronze", hoist=True)
         silver_role_obj = await client.create_role(message.author.server, name="Silver", hoist=True)
         gold_role_obj = await client.create_role(message.author.server, name="Gold", hoist=True)
@@ -152,42 +144,42 @@ async def on_message(message):
 
         await client.send_message(message.channel, "Config Updated! New roles have been created for the competitive rank roles. Be sure to configure their colours, positions and names!")
 
-    elif message.content.lower().startswith(".config bronze "):
+    elif message.content.lower().startswith(".config bronze ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Bronze")
         serv.config.update("bronze_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config silver "):
+    elif message.content.lower().startswith(".config silver ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Silver")
         serv.config.update("silver_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config gold "):
+    elif message.content.lower().startswith(".config gold ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Gold")
         serv.config.update("gold_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new gold role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config platinum "):
+    elif message.content.lower().startswith(".config platinum ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Platinum")
         serv.config.update("platinum_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config diamond "):
+    elif message.content.lower().startswith(".config diamond ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Diamond")
         serv.config.update("diamond_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config master "):
+    elif message.content.lower().startswith(".config master ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Master")
         serv.config.update("master_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**.Be sure to configure its colour, position and name!".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config grandmaster "):
+    elif message.content.lower().startswith(".config grandmaster ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Grandmaster")
         serv.config.update("grandmaster_id", role.id)
         await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
-    elif message.content.lower().startswith(".config"):
+    elif message.content.lower().startswith(".config") and message.author.server_permissions.administrator:
         config = serv.config.load()
         embed=discord.Embed()
         embed=discord.Embed(title="Ow Bot Config", description="Configuration for the OW Role Bot")

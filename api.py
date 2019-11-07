@@ -73,5 +73,5 @@ class Api:
 
     def get(self, request):
         self._requestData = _requests.get(urllib.parse.quote(request, safe=':/?&=,.'), headers=self.headers)
-        _data = self._requestData.json().get("eu", self._requestData.json().get("us", self._requestData.json().get("kr", None)))
+        _data = self._requestData.json().get("eu", self._requestData.json().get("us", self._requestData.json().get("kr", {})))
         return _data
