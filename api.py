@@ -47,6 +47,16 @@ class Config:
         conf[key] = attr
         self.save(conf)
 
+    def delete_achievement(self, key):
+        conf = self.load()
+        del conf[key]
+        self.save(conf)
+        
+    def delete_time_role(self, hero, time):
+        conf = self.load()
+        del conf["time"][hero][time]
+        self.save(conf)
+        
     def get_conversion_table(self, table):
         _index = _requests.get("https://raw.githubusercontent.com/TheTimebike/ow-api-bot/master/conversion_tables/index.json")
         _data_url = _index.json()[table]
