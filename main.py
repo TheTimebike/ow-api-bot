@@ -50,6 +50,15 @@ async def on_message(message):
                 await client.send_message(message.channel, "Achievement {0} not found! Please check spelling and try again".format(achievement.title()))
         print(achievements)
 
+    elif message.content.lower().startswith(".config disable achievement "):
+        achievements_to_disable = message.content.lower()[len(".config disable achievement "):].split(", ")
+        for achievement in achievements_to_disable:
+            if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and in serv.config.load().keys():
+                serv.config.delete_achievement(achievement.replace(" ", "_"))
+                await client.send_message(message.channel, "The achievement {0} will no longer give a role!".format(achievement.title()))
+            elif achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and not in serv.config.load().keys()"
+                await client.send_message(message.channel, "Could not find the achievement: {0}.".format(achievement.title()))
+                
     elif message.content.lower().startswith(".config time "):
         arg = message.content.lower()[len(".config time "):].split(", ")
         time = arg[1]
