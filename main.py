@@ -155,8 +155,8 @@ async def on_message(message):
         config = serv.config.load()
         embed=discord.Embed()
         embed=discord.Embed(title="Ow Bot Config", description="Configuration for the OW Role Bot")
-        embed.add_field(name="Region\nRole", value="** **", inline=True)
-        embed.add_field(name="{0}\n{1}".format(config["region"].upper(), config["role"].title()), value="** **", inline=True)
+        embed.add_field(name="Role", value="** **", inline=True)
+        embed.add_field(name="{0}".format(config["role"].title()), value="** **", inline=True)
         embed.set_footer(text="Made by u/TheTimebike")
         await client.send_message(message.channel, embed=embed)
 
