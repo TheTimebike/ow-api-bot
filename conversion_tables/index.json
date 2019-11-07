@@ -1,5 +1,6 @@
 {
     "achievements": "https://raw.githubusercontent.com/TheTimebike/ow-api-bot/master/conversion_tables/achievements.json",
     "hero_colours": "https://raw.githubusercontent.com/TheTimebike/ow-api-bot/master/conversion_tables/hero_colours.json",
+    "hero_details": "https://raw.githubusercontent.com/TheTimebike/ow-api-bot/master/conversion_tables/hero_details.json",
     "rank_colours": "https://raw.githubusercontent.com/TheTimebike/ow-api-bot/master/conversion_tables/rank_colours.json"
 }
