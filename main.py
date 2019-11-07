@@ -95,42 +95,42 @@ async def on_message(message):
         serv.config.update("master_id", master_role_obj.id)
         serv.config.update("grandmaster_id", grandmaster_role_obj.id)
 
-        await client.send_message(message.channel, "Config Updated! New roles have been created for the competitive rank roles.")
+        await client.send_message(message.channel, "Config Updated! New roles have been created for the competitive rank roles. Be sure to configure their colours, positions and names!")
 
     elif message.content.lower().startswith(".config bronze "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("bronze_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Bronze")
+        serv.config.update("bronze_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
 
     elif message.content.lower().startswith(".config silver "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("silver_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Silver")
+        serv.config.update("silver_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
     elif message.content.lower().startswith(".config gold "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("gold_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Gold")
+        serv.config.update("gold_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new gold role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
     elif message.content.lower().startswith(".config platinum "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("platinum_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Platinum")
+        serv.config.update("platinum_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
     elif message.content.lower().startswith(".config diamond "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("diamond_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Diamond")
+        serv.config.update("diamond_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
     elif message.content.lower().startswith(".config master "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("master_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Master")
+        serv.config.update("master_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**.Be sure to configure its colour, position and name!".format(message.role.mention))
 
     elif message.content.lower().startswith(".config grandmaster "):
-        role_id = message.role_mentions[0].id
-        serv.config.update("grandmaster_id", role_id)
-        await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**".format(message.role_mentions[0].mention))
+        role = await client.create_role(message.author.server, name="Grandmaster")
+        serv.config.update("grandmaster_id", role.id)
+        await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
 
     elif message.content.lower().startswith(".config"):
         config = serv.config.load()
