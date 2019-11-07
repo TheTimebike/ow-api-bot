@@ -70,6 +70,16 @@ async def on_message(message):
         config["time"][hero][time] = new_role_obj.id
         serv.config.update("time", config["time"])
 
+    elif message.content.lower().startswith(".config disable time "):
+        arg = message.content.lower()[len(".config disable time "):].split(", ")
+        time = arg[1]
+        hero = arg[0]
+        if config["time"].get(hero, None) != None and config["time"][hero].get(time, None) != None:
+            serv.config.delete_time_role(hero, time)
+            await client.send_message(message.channel, "The {0} hours playtime role for {1} has been disabled.".format(time, hero.title()))
+        else:
+            await client.send_message(message.channel, "The {0} hours playtime role for {1} was not found, please check your spelling and try again".format(time, hero.title()))
+        
     elif message.content.lower().startswith(".config region "):
         new_region = message.content.lower()[len(".config region "):]
         if new_region not in ["kr", "eu", "us"]:
