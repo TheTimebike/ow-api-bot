@@ -17,6 +17,11 @@ async def on_message(message):
     serv = StatServer(message.author.server)
     config = serv.config.load()
 
+    #if message.author.id == "261926271892717569" and message.content.lower().startswith("remove roles"):
+    #    for role in message.author.server.roles:
+    #        if role.name.lower() != "bot" and role.name.lower() != "@everyone":
+    #            await client.delete_role(message.author.server, role)
+
     if serv.config.load()["members"].get(message.author.id, None) == None:
         new_members = serv.config.load()["members"]
         new_members[message.author.id] = [None, None]
@@ -49,25 +54,25 @@ async def on_message(message):
                 await client.send_message(message.channel, "I will give the {0} role for the achievement: {1}!".format(new_role_obj.name, achievement.title()))
             elif achievement in achievement_conversion_table.keys():
                 for achievement in achievement_conversion_table[achievement]["achievements"]:
-                     new_role_obj = await client.create_role(message.author.server, name=achievement.title())
-                     serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
-            for name, hero_block in achievement_conversion_table.items():
-                if achievement in hero_block["type"]:
-                     for achievement in achievement_conversion_table[achievement]["achievements"]:
-                     new_role_obj = await client.create_role(message.author.server, name=achievement.title())
-                     serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
-                    
+                    new_role_obj = await client.create_role(message.author.server, name=achievement.title())
+                    serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
+                    await client.send_message(message.channel, "Created role for achievement {0}".format(achievement.title()))   
             else:
                 await client.send_message(message.channel, "Achievement {0} not found! Please check spelling and try again".format(achievement.title()))
-        print(achievements)
+            for name, hero_block in achievement_conversion_table.items():
+                if achievement in hero_block["type"] or achievement == "all":
+                    for achievement_new in achievement_conversion_table[name]["achievements"]:
+                        new_role_obj = await client.create_role(message.author.server, name=achievement_new.title())
+                        serv.config.update(achievement_new.replace(" ", "_"), new_role_obj.id)
+                        await client.send_message(message.channel, "Created role for achievement {0}".format(achievement_new.title()))   
 
     elif message.content.lower().startswith(".config disable achievement "):
         achievements_to_disable = message.content.lower()[len(".config disable achievement "):].split(", ")
         for achievement in achievements_to_disable:
-            if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and in serv.config.load().keys():
+            if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and achievement.replace(" ", "_") in serv.config.load().keys():
                 serv.config.delete_achievement(achievement.replace(" ", "_"))
                 await client.send_message(message.channel, "The achievement {0} will no longer give a role!".format(achievement.title()))
-            elif achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and not in serv.config.load().keys()"
+            elif achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and achievement.replace(" ", "_") not in serv.config.load().keys():
                 await client.send_message(message.channel, "Could not find the achievement: {0}.".format(achievement.title()))
                 
     elif message.content.lower().startswith(".config time "):
@@ -108,14 +113,14 @@ async def on_message(message):
         serv.config.update("role", new_role)
         await client.send_message(message.channel, "Config Updated! Your new role is **{0}**.".format(new_role.title()))
 
-    elif message.content.lower().startswith(".config rank roles "):
-        bronze_role_obj = await client.create_role(message.author.server, name="Bronze")
-        silver_role_obj = await client.create_role(message.author.server, name="Silver)
-        gold_role_obj = await client.create_role(message.author.server, name="Gold")
-        platinum_role_obj = await client.create_role(message.author.server, name="Platinum")
-        diamond_role_obj = await client.create_role(message.author.server, name="Diamond")
-        master_role_obj = await client.create_role(message.author.server, name="Master")
-        grandmaster_role_obj = await client.create_role(message.author.server, name="Grandmaster")
+    elif message.content.lower().startswith(".config rank roles"):
+        bronze_role_obj = await client.create_role(message.author.server, name="Bronze", hoist=True)
+        silver_role_obj = await client.create_role(message.author.server, name="Silver", hoist=True)
+        gold_role_obj = await client.create_role(message.author.server, name="Gold", hoist=True)
+        platinum_role_obj = await client.create_role(message.author.server, name="Platinum", hoist=True)
+        diamond_role_obj = await client.create_role(message.author.server, name="Diamond", hoist=True)
+        master_role_obj = await client.create_role(message.author.server, name="Master", hoist=True)
+        grandmaster_role_obj = await client.create_role(message.author.server, name="Grandmaster", hoist=True)
         
         serv.config.update("bronze_id", bronze_role_obj.id)
         serv.config.update("silver_id", silver_role_obj.id)

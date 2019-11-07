@@ -197,7 +197,7 @@
   "reinhardt": {
     "type": [
       "tank",
-      "shield_tank",
+      "shield tank",
       "melee"
     ],
     "achievements": [
@@ -218,7 +218,7 @@
   "sigma": {
     "type": [
       "tank",
-      "shield_tank",
+      "shield tank",
       "hitscan"
     ],
     "achievements": [
@@ -291,7 +291,7 @@
   "winston": {
     "type": [
       "tank",
-      "shield_tank",
+      "shield tank",
       "beam"
     ],
     "achievements": [
@@ -312,7 +312,7 @@
   "zarya": {
     "type": [
       "tank",
-      "shield_tank",
+      "shield tank",
       "beam",
       "projectile"
     ],
