@@ -41,11 +41,22 @@ async def on_message(message):
 
     if message.content.lower().startswith(".config achievement "):
         achievements = message.content.lower()[len(".config achievement "):].split(", ")
+        achievement_conversion_table = serv.config.get_conversion_table("hero_details")
         for achievement in achievements:
             if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"]:
                 new_role_obj = await client.create_role(message.author.server, name=achievement.title())
                 serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
                 await client.send_message(message.channel, "I will give the {0} role for the achievement: {1}!".format(new_role_obj.name, achievement.title()))
+            elif achievement in achievement_conversion_table.keys():
+                for achievement in achievement_conversion_table[achievement]["achievements"]:
+                     new_role_obj = await client.create_role(message.author.server, name=achievement.title())
+                     serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
+            for name, hero_block in achievement_conversion_table.items():
+                if achievement in hero_block["type"]:
+                     for achievement in achievement_conversion_table[achievement]["achievements"]:
+                     new_role_obj = await client.create_role(message.author.server, name=achievement.title())
+                     serv.config.update(achievement.replace(" ", "_"), new_role_obj.id)
+                    
             else:
                 await client.send_message(message.channel, "Achievement {0} not found! Please check spelling and try again".format(achievement.title()))
         print(achievements)
