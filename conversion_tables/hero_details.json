@@ -1,3 +1,334 @@
 {
-
+  "ana": {
+    "type": [
+      "support",
+      "sniper",
+      "hitscan",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "ashe": {
+    "type": [
+      "damage",
+      "sniper",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "baptiste": {
+    "type": [
+      "support",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "bastion": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "brigitte": {
+    "type": [
+      "support",
+      "melee"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "doomfist": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "dva": {
+    "type": [
+      "tank",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "genji": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "hammond": {
+    "type": [
+      "tank",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "hanzo": {
+    "type": [
+      "damage",
+      "sniper",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "junkrat": {
+    "type": [
+      "damage",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "lucio": {
+    "type": [
+      "support",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "mcree": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "mei": {
+    "type": [
+      "damage",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "mercy": {
+    "type": [
+      "support",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "moira": {
+    "type": [
+      "support",
+      "beam"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "orisa": {
+    "type": [
+      "tank",
+      "shield tank",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "pharah": {
+    "type": [
+      "damage",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "reaper": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "reinhardt": {
+    "type": [
+      "tank",
+      "shield_tank",
+      "melee"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "roadhog": {
+    "type": [
+      "tank",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "sigma": {
+    "type": [
+      "tank",
+      "shield_tank",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "soldier 76": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "sombra": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "symmetra": {
+    "type": [
+      "damage",
+      "beam",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "torbjorn": {
+    "type": [
+      "damage",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "tracer": {
+    "type": [
+      "damage",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "widowmaker": {
+    "type": [
+      "damage",
+      "sniper",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "winston": {
+    "type": [
+      "tank",
+      "shield_tank",
+      "beam"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "wrecking ball": {
+    "type": [
+      "tank",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "zarya": {
+    "type": [
+      "tank",
+      "shield_tank",
+      "beam",
+      "projectile"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  },
+  "zenyatta": {
+    "type": [
+      "support",
+      "hitscan"
+    ],
+    "achievements": [
+      "",
+      ""
+    ]
+  }
 }
