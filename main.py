@@ -162,7 +162,7 @@ async def on_message(message):
 
     elif config["members"][message.author.id][0] != None:
         stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
-        rank = stats[config["region"]]["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
+        rank = stats["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
         to_remove, ranks = [], ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]
         for rank_name in ranks:
             if rank_name.lower() != rank.lower():
@@ -173,7 +173,7 @@ async def on_message(message):
         await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
 
         achievements = api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
-        for role, achievement_block in achievements[config["region"]]["achievements"].items():
+        for role, achievement_block in achievements["achievements"].items():
             for achievement, state in achievement_block.items():
                 if state == True and config.get(achievement, None) != None:
                     await client.add_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
@@ -182,7 +182,7 @@ async def on_message(message):
 
         playtime = api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         for hero, playtime_block in config["time"].items():
-            overall_hero_playtime = playtime["eu"]["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["eu"]["heroes"]["playtime"]["competitive"].get(hero, 0)
+            overall_hero_playtime = playtime["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["heroes"]["playtime"]["competitive"].get(hero, 0)
             print(overall_hero_playtime)
             for key, attr in playtime_block.items():
                 print(key)
