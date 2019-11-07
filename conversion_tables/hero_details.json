@@ -58,8 +58,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "airstrike",
+      "cratered"
     ]
   },
   "dva": {
@@ -68,8 +68,8 @@
       "hitscan"
     ],
     "achievements": [
-      "airstrike",
-      "cratered"
+      "shot down",
+      "game over"
     ]
   },
   "genji": {
@@ -78,8 +78,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "their own worst enemy",
+      "slice and dice"
     ]
   },
   "hammond": {
@@ -88,8 +88,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "adaptation",
+      "strike"
     ]
   },
   "hanzo": {
@@ -99,8 +99,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "simple geometry",
+      "the dragon is sated"
     ]
   },
   "junkrat": {
@@ -109,8 +109,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "roadkill",
+      "mine like a steel trap"
     ]
   },
   "lucio": {
@@ -139,8 +139,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "ice blocked",
+      "cold snap"
     ]
   },
   "mercy": {
@@ -149,8 +149,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "group health plan",
+      "huge rez"
     ]
   },
   "moira": {
@@ -159,8 +159,8 @@
       "beam"
     ],
     "achievements": [
-      "",
-      ""
+      "antipode",
+      "simple trigonometry"
     ]
   },
   "orisa": {
@@ -170,8 +170,8 @@
       "projectile"
     ],
     "achievements": [
-      "supercharged",
-      ""
+      "overclocked",
+      "halt state"
     ]
   },
   "pharah": {
@@ -180,8 +180,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "clearing the area",
+      "death from above"
     ]
   },
   "reaper": {
@@ -191,7 +191,7 @@
     ],
     "achievements": [
       "die die die die",
-      "clearing the area"
+      "waste not want not"
     ]
   },
   "reinhardt": {
@@ -211,8 +211,8 @@
       "hitscan"
     ],
     "achievements": [
-      "roadkill",
-      ""
+      "giving you the hook",
+      "hog wild"
     ]
   },
   "sigma": {
@@ -222,8 +222,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "event horizon",
+      "convervation of energy"
     ]
   },
   "soldier 76": {
@@ -232,8 +232,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "rocket man",
+      "target rich environment"
     ]
   },
   "sombra": {
@@ -243,7 +243,7 @@
     ],
     "achievements": [
       "hack the planet",
-      ""
+      "power outage"
     ]
   },
   "symmetra": {
@@ -253,8 +253,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "the car wash",
+      "huge success"
     ]
   },
   "torbjorn": {
@@ -263,8 +263,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "armor up",
+      "raid wipe"
     ]
   },
   "tracer": {
@@ -274,7 +274,7 @@
     ],
     "achievements": [
       "total recall",
-      ""
+      "special delivery"
     ]
   },
   "widowmaker": {
@@ -284,8 +284,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "did that sting",
+      "smooth as silk"
     ]
   },
   "winston": {
@@ -295,8 +295,8 @@
       "beam"
     ],
     "achievements": [
-      "",
-      ""
+      "mine sweeper",
+      "anger management"
     ]
   },
   "wrecking ball": {
@@ -305,8 +305,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "adaptation",
+      "strike"
     ]
   },
   "zarya": {
@@ -317,8 +317,8 @@
       "projectile"
     ],
     "achievements": [
-      "",
-      ""
+      "power overwhelming",
+      "the power of attraction"
     ]
   },
   "zenyatta": {
@@ -327,8 +327,8 @@
       "hitscan"
     ],
     "achievements": [
-      "",
-      ""
+      "rapid discord",
+      "the iris embraces you"
     ]
   }
 }
