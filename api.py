@@ -20,7 +20,6 @@ class Config:
         if not path.isfile(self.filepath):
             with open(self.filepath, "w+") as out:
                 json.dump({
-                    "region": "us",
                     "role": "Damage",
                     "bronze_id": None,
                     "silver_id": None,
