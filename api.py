@@ -48,7 +48,8 @@ class Config:
 
     def delete_achievement(self, key):
         conf = self.load()
-        del conf[key]
+        if conf.get(key, None) != None:
+            del conf[key]
         self.save(conf)
         
     def delete_time_role(self, hero, time):
@@ -72,8 +73,5 @@ class Api:
 
     def get(self, request):
         self._requestData = _requests.get(urllib.parse.quote(request, safe=':/?&=,.'), headers=self.headers)
-        #print(json.dumps(self._requestData, indent=4))
         _data = self._requestData.json().get("eu", self._requestData.json().get("us", self._requestData.json().get("kr", None)))
-        #if _data == None:
-        print(_requests.get(urllib.parse.quote(request, safe=':/?&=,.'), headers=self.headers).json())
         return _data

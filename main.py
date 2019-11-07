@@ -68,13 +68,33 @@ async def on_message(message):
 
     elif message.content.lower().startswith(".config disable achievement "):
         achievements_to_disable = message.content.lower()[len(".config disable achievement "):].split(", ")
+        achievement_conversion_table = serv.config.get_conversion_table("hero_details")
         for achievement in achievements_to_disable:
             if achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and achievement.replace(" ", "_") in serv.config.load().keys():
                 serv.config.delete_achievement(achievement.replace(" ", "_"))
                 await client.send_message(message.channel, "The achievement {0} will no longer give a role!".format(achievement.title()))
             elif achievement.replace(" ", "_") in serv.config.get_conversion_table("achievements")["all"] and achievement.replace(" ", "_") not in serv.config.load().keys():
                 await client.send_message(message.channel, "Could not find the achievement: {0}.".format(achievement.title()))
-                
+            elif achievement in achievement_conversion_table.keys():
+                for achievement_new in achievement_conversion_table[achievement]["achievements"]:
+                    if achievement_new in serv.config.load().keys():
+                        serv.config.delete_achievement(achievement_new.replace(" ", "_"))
+                        await client.send_message(message.channel, "The achievement {0} will no longer give a role".format(achievement_new.replace(" ", "_").title()))   
+            elif achievement == "all":
+                for name, achievement_block in achievement_conversion_table.items():
+                    for achievement_new in achievement_block["achievements"]:
+                        achievement_new = achievement_new.replace(" ", "_")
+                        if achievement_new in serv.config.load().keys():
+                            serv.config.delete_achievement(achievement_new.replace(" ", "_"))
+                            await client.send_message(message.channel, "The achievement {0} will no longer give a role".format(achievement_new.replace("_", " ").title())) 
+            else:
+                print("could not find {0}".format(achievement))
+        for name, hero_block in achievement_conversion_table.items():
+            if achievement in hero_block["type"] or achievement == "all" and achievement in serv.config.load().keys():
+                for achievement_new in achievement_conversion_table[name]["achievements"]:
+                    serv.config.delete_achievement(achievement_new.replace(" ", "_"))
+                    await client.send_message(message.channel, "The achievement {0} will no longer give a role!".format(achievement_new.title()))   
+
     elif message.content.lower().startswith(".config time "):
         arg = message.content.lower()[len(".config time "):].split(", ")
         time = arg[1]
@@ -199,9 +219,7 @@ async def on_message(message):
         playtime = api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         for hero, playtime_block in config["time"].items():
             overall_hero_playtime = playtime["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["heroes"]["playtime"]["competitive"].get(hero, 0)
-            print(overall_hero_playtime)
             for key, attr in playtime_block.items():
-                print(key)
                 if int(overall_hero_playtime) >= int(key):
                     await client.add_roles(message.author, get_role(message.author.server.roles, id=attr))
 client.run(auth.token)
