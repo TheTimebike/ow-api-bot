@@ -53,6 +53,17 @@ async def on_message(message):
                 await client.send_message(message.channel, "Achievement {0} not found!".format(achievement.title()))
         print(achievements)
 
+    elif message.content.lower().startswith(".config time "):
+        arg = message.content.lower()[len(".config time "):].split(", ")
+        time = arg[1]
+        hero = arg[0]
+        role_name = "{0} Hour {1} Playtime".format(time, hero)
+        new_role_obj = await client.create_role(message.author.server, name=role_name.title())
+        if config["time"].get(hero, None) == None:
+            config["time"][hero] = {}
+        config["time"][hero][time] = new_role_obj.id
+        serv.config.update("time", config["time"])
+
     elif message.content.lower().startswith(".config region "):
         new_region = message.content.lower()[len(".config region "):]
         if new_region not in ["kr", "eu", "us"]:
@@ -140,7 +151,6 @@ async def on_message(message):
 
     elif config["members"][message.author.id][0] != None:
         stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
-        print(json.dumps(stats, indent=4))
         rank = stats[config["region"]]["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
         to_remove, ranks = [], ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]
         for rank_name in ranks:
@@ -159,4 +169,12 @@ async def on_message(message):
                 if state == False and config.get(achievement, None) != None:
                     await client.remove_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
 
+        playtime = api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+        for hero, playtime_block in config["time"].items():
+            overall_hero_playtime = playtime["eu"]["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["eu"]["heroes"]["playtime"]["competitive"].get(hero, 0)
+            print(overall_hero_playtime)
+            for key, attr in playtime_block.items():
+                print(key)
+                if int(overall_hero_playtime) >= int(key):
+                    await client.add_roles(message.author, get_role(message.author.server.roles, id=attr))
 client.run(auth.token)

@@ -29,6 +29,7 @@ class Config:
                     "diamond_id": None,
                     "master_id": None,
                     "grandmaster_id": None,
+                    "time": {},
                     "members": {}
                 }, out, indent=4)
 
@@ -63,8 +64,4 @@ class Api:
     def get(self, request):
         self._requestData = _requests.get(urllib.parse.quote(request, safe=':/?&=,.'), headers=self.headers)
         #print(json.dumps(self._requestData, indent=4))
-        try:
-            self._requestData.json()
-        except:
-            print(self._requestData)
         return self._requestData.json()
