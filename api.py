@@ -21,7 +21,7 @@ class Config:
             with open(self.filepath, "w+") as out:
                 json.dump({
                     "region": "us",
-                    "role": None,
+                    "role": "Damage",
                     "bronze_id": None,
                     "silver_id": None,
                     "gold_id": None,
