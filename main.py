@@ -128,13 +128,13 @@ async def on_message(message):
         await client.send_message(message.channel, "Config Updated! Your new role is **{0}**.".format(new_role.title()))
 
     elif message.content.lower().startswith(".config rank roles") and message.author.server_permissions.administrator:
-        bronze_role_obj = await client.create_role(message.author.server, name="Bronze", hoist=True)
-        silver_role_obj = await client.create_role(message.author.server, name="Silver", hoist=True)
-        gold_role_obj = await client.create_role(message.author.server, name="Gold", hoist=True)
-        platinum_role_obj = await client.create_role(message.author.server, name="Platinum", hoist=True)
-        diamond_role_obj = await client.create_role(message.author.server, name="Diamond", hoist=True)
-        master_role_obj = await client.create_role(message.author.server, name="Master", hoist=True)
         grandmaster_role_obj = await client.create_role(message.author.server, name="Grandmaster", hoist=True)
+        master_role_obj = await client.create_role(message.author.server, name="Master", hoist=True)
+        diamond_role_obj = await client.create_role(message.author.server, name="Diamond", hoist=True)
+        platinum_role_obj = await client.create_role(message.author.server, name="Platinum", hoist=True)
+        gold_role_obj = await client.create_role(message.author.server, name="Gold", hoist=True)
+        silver_role_obj = await client.create_role(message.author.server, name="Silver", hoist=True)
+        bronze_role_obj = await client.create_role(message.author.server, name="Bronze", hoist=True)
         
         serv.config.update("bronze_id", bronze_role_obj.id)
         serv.config.update("silver_id", silver_role_obj.id)
