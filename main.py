@@ -13,9 +13,9 @@ class StatServer:
 async def on_role_delete(role):
     serv = StatServer(role.server)
     config = serv.config.load()
-    for rank in ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]:
-        if config["{0}_id".format(rank)] == role.id:
-            config["{0}_id".format(rank)] = None
+    for key, attr in config.items():
+        if attr == role.id:
+            config[key] == None
     serv.config.save(config)
     for hero, time_block in config["time"].items():
         for time, role_id in time_block.items():
