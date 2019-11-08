@@ -199,9 +199,10 @@ async def on_message(message):
                 for rank_name in ranks:
                     if rank_name.lower() != rank.lower():
                         to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
-                for _ in to_remove:
-                    await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
-                await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
+                for role in to_remove:
+                    await client.remove_roles(message.author, role)
+                if rank != None:
+                    await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
         except Exception as ex:
             print(ex)
         
