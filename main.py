@@ -110,16 +110,22 @@ async def on_message(message):
                     await client.send_message(message.channel, "The achievement {0} will no longer give a role!".format(achievement_new.title()))   
 
     elif message.content.lower().startswith(".config time ") and message.author.server_permissions.administrator:
-        arg = message.content.lower()[len(".config time "):].split(", ")
+        if len(message.role_mentions) == 0:
+            arg = message.content.lower()[len(".config time "):].split(", ")
+        elif len(message.role_mentions) == 1:
+            arg = message.content.lower()[len(".config time "):].replace(message.role_mentions[0].mention, "").split(", ")
         time = arg[1]
         hero = arg[0]
         role_name = "{0} Hour {1} Playtime".format(time, hero)
-        new_role_obj = await client.create_role(message.author.server, name=role_name.title())
+        if len(message.role_mentions) == 0:
+            new_role_obj = await client.create_role(message.author.server, name=role_name.title())
+        elif len(message.role_mentions) == 1:
+            new_role_obj = message.role_mentions[0]
         if config["time"].get(hero, None) == None:
             config["time"][hero] = {}
         config["time"][hero][time] = new_role_obj.id
         serv.config.update("time", config["time"])
-        await client.send_message(message.channel, "The {0} hours playtime role for {1} has been created.".format(time, hero.title()))
+        await client.send_message(message.channel, "The {0} hours playtime role for {1} has been bound.".format(time, hero.title()))
 
     elif message.content.lower().startswith(".config disable time ") and message.author.server_permissions.administrator:
         arg = message.content.lower()[len(".config disable time "):].split(", ")
