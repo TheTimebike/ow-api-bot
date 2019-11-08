@@ -15,6 +15,7 @@ async def on_server_join(server):
 
 @client.event
 async def on_message(message):
+    print("{0} -- {1}".format(message.author.display_name, message.content))
     serv = StatServer(message.author.server)
     config = serv.config.load()
 
@@ -198,25 +199,32 @@ async def on_message(message):
                 for rank_name in ranks:
                     if rank_name.lower() != rank.lower():
                         to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
-            for _ in to_remove:
-                await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
-            await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
-        except:
-            pass
+                for _ in to_remove:
+                    await client.remove_roles(message.author, to_remove[0], to_remove[1], to_remove[2], to_remove[3], to_remove[4], to_remove[5])
+                await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
+        except Exception as ex:
+            print(ex)
+        
+        try:
+            #sleep(2)
+            achievements = stats#api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+            for role, achievement_block in achievements["achievements"].items():
+                for achievement, state in achievement_block.items():
+                    if state == True and config.get(achievement, None) != None:
+                        await client.add_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
+                    if state == False and config.get(achievement, None) != None:
+                        await client.remove_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
+        except Exception as ex:
+            print(ex)
 
-        #sleep(2)
-        achievements = stats#api.Api().get(api.ACHIEVEMENT_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
-        for role, achievement_block in achievements["achievements"].items():
-            for achievement, state in achievement_block.items():
-                if state == True and config.get(achievement, None) != None:
-                    await client.add_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
-                if state == False and config.get(achievement, None) != None:
-                    await client.remove_roles(message.author, get_role(message.author.server.roles, id=config[achievement]))
-        #sleep(2)
-        playtime = stats#api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
-        for hero, playtime_block in config["time"].items():
-            overall_hero_playtime = playtime["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["heroes"]["playtime"]["competitive"].get(hero, 0)
-            for key, attr in playtime_block.items():
-                if int(overall_hero_playtime) >= int(key):
-                    await client.add_roles(message.author, get_role(message.author.server.roles, id=attr))
+        try:
+            #sleep(2)
+            playtime = stats#api.Api().get(api.HEROES_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
+            for hero, playtime_block in config["time"].items():
+                overall_hero_playtime = playtime["heroes"]["playtime"]["quickplay"].get(hero, 0) +  playtime["heroes"]["playtime"]["competitive"].get(hero, 0)
+                for key, attr in playtime_block.items():
+                    if int(overall_hero_playtime) >= int(key):
+                        await client.add_roles(message.author, get_role(message.author.server.roles, id=attr))
+        except Exception as ex:
+            print(ex)
 client.run(auth.token)

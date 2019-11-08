@@ -83,3 +83,4 @@ class Api:
         except Exception as ex:
             print(ex)
             print(self._requestData)
+            print(self._requestData.json())
