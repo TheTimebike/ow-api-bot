@@ -147,9 +147,16 @@ async def on_message(message):
         await client.send_message(message.channel, "Config Updated! New roles have been created for the competitive rank roles. Be sure to configure their colours, positions and names!")
 
     elif message.content.lower().startswith(".config bronze ") and message.author.server_permissions.administrator:
-        role = await client.create_role(message.author.server, name="Bronze")
-        serv.config.update("bronze_id", role.id)
-        await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
+        if len(message.role_mentions) == 0:
+            role = await client.create_role(message.author.server, name="Bronze")
+            serv.config.update("bronze_id", role.id)
+            await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
+        elif len(message.role_mentions) == 1:
+            role = message.role_mentions[0]
+            serv.config.update("bronze_id", role.id)
+            await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
+        elif len(message.role_mentions) > 1:
+            await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
     elif message.content.lower().startswith(".config silver ") and message.author.server_permissions.administrator:
         role = await client.create_role(message.author.server, name="Silver")
