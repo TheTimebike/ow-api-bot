@@ -285,7 +285,7 @@ async def on_message(message):
         embed.set_footer(text="Made by u/TheTimebike")
         await client.send_message(message.channel, embed=embed)
 
-    elif config["members"].get(message.author.id, [None, None])[0] != None:
+    elif None not in config["members"].get(message.author.id, [None, None]):
         stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         try:
             rank = stats["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
@@ -296,8 +296,7 @@ async def on_message(message):
                         to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
                 for role in to_remove:
                     await client.remove_roles(message.author, role)
-                if rank != None:
-                    await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
+                await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
         except Exception as ex:
             print(ex)
         
