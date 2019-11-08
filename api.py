@@ -3,10 +3,7 @@ http.cookies._is_legal_key = lambda _: True
 import requests as _requests
 from os import path, makedirs
 
-BASE_ROUTE = "https://owapi.net/api/v3"
 STATS_ROUTE = "https://owapi.net/api/v3/u/{0}/blob?platform={1}"
-HEROES_ROUTE = "https://owapi.net/api/v3/u/{0}/heroes?platform={1}"
-ACHIEVEMENT_ROUTE = "https://owapi.net/api/v3/u/{0}/achievements?platform={1}"
 
 class Config:
     def __init__(self, directory, server_id):
