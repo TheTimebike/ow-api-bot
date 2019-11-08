@@ -257,7 +257,7 @@ async def on_message(message):
         embed.set_footer(text="Made by u/TheTimebike")
         await client.send_message(message.channel, embed=embed)
 
-    elif config["members"][message.author.id][0] != None:
+    elif config["members"].get(message.author.id, [None, None])[0] != None:
         stats = api.Api().get(api.STATS_ROUTE.format(config["members"][message.author.id][0], config["members"][message.author.id][1]))
         try:
             rank = stats["stats"]["competitive"]["overall_stats"]["{0}_tier".format(config["role"])]
