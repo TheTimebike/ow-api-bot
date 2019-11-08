@@ -258,7 +258,7 @@ async def on_message(message):
             if rank != None:
                 to_remove, ranks = [], ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]
                 for rank_name in ranks:
-                    if rank_name.lower() != rank.lower():
+                    if rank_name.lower() != rank.lower() and config.get("{0}_id".format(rank_name), None) != None:
                         to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
                 for role in to_remove:
                     await client.remove_roles(message.author, role)
