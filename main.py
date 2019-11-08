@@ -8,7 +8,18 @@ class StatServer:
     def __init__(self, server):
         self.server = server
         self.config = api.Config("ow-configs", self.server.id)
-        
+@client.event
+async def on_role_delete(role):
+    serv = StatServer(role.server)
+    config = serv.config.load()
+    for rank in ["bronze", "silver", "gold", "platinum", "diamond", "master", "grandmaster"]:
+        if config["{0}_id".format(rank)] == role.id:
+            config["{0}_id".format(rank)] = None
+    serv.config.save(config)
+    for hero, time_block in config["time"].items():
+        for time, role_id in time_block.items():
+            if role_id == role.id:
+                serv.config.delete_time_role(hero, time)
 @client.event
 async def on_server_join(server):
     statserv = StatServer(server)
