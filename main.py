@@ -114,7 +114,7 @@ async def on_message(message):
             arg = message.content.lower()[len(".config time "):].split(", ")
         elif len(message.role_mentions) == 1:
             arg = message.content.lower()[len(".config time "):].replace(message.role_mentions[0].mention, "").split(", ")
-        time = arg[1]
+        time = arg[1].replace(" ", "")
         hero = arg[0]
         role_name = "{0} Hour {1} Playtime".format(time, hero)
         if len(message.role_mentions) == 0:
@@ -129,7 +129,7 @@ async def on_message(message):
 
     elif message.content.lower().startswith(".config disable time ") and message.author.server_permissions.administrator:
         arg = message.content.lower()[len(".config disable time "):].split(", ")
-        time = arg[1]
+        time = arg[1].replace(" ", "")
         hero = arg[0]
         if config["time"].get(hero, None) != None and config["time"][hero].get(time, None) != None:
             serv.config.delete_time_role(hero, time)
@@ -164,15 +164,15 @@ async def on_message(message):
 
         await client.send_message(message.channel, "Config Updated! New roles have been created for the competitive rank roles. Be sure to configure their colours, positions and names!")
 
-    elif message.content.lower().startswith(".config bronze ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config bronze") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Bronze", hoist=True)
             serv.config.update("bronze_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("bronze_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new bronze role is **{0}**".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -180,15 +180,15 @@ async def on_message(message):
         serv.config.update("bronze_id", None)
         await client.send_message(message.channel, "The bronze role has been disabled.")
             
-    elif message.content.lower().startswith(".config silver ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config silver") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Silver", hoist=True)
             serv.config.update("silver_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**. Be sure to configure its colour, position and name!".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("silver_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**. Be sure to configure its colour, position and name!".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new silver role is **{0}**. Be sure to configure its colour, position and name!".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -196,15 +196,15 @@ async def on_message(message):
         serv.config.update("silver_id", None)
         await client.send_message(message.channel, "The silver role has been disabled.")
             
-    elif message.content.lower().startswith(".config gold ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config gold") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Gold", hoist=True)
             serv.config.update("gold_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new gold role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new gold role is **{0}**".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("gold_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new gold role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new gold role is **{0}**".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -212,15 +212,15 @@ async def on_message(message):
         serv.config.update("gold_id", None)
         await client.send_message(message.channel, "The gold role has been disabled.")
             
-    elif message.content.lower().startswith(".config platinum ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config platinum") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Platinum", hoist=True)
             serv.config.update("platinum_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("platinum_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new platinum role is **{0}**".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -228,15 +228,15 @@ async def on_message(message):
         serv.config.update("platinum_id", None)
         await client.send_message(message.channel, "The platinum role has been disabled.")
             
-    elif message.content.lower().startswith(".config diamond ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config diamond") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Diamond", hoist=True)
             serv.config.update("diamond_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("diamond_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new diamond role is **{0}**".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -244,15 +244,15 @@ async def on_message(message):
         serv.config.update("diamond_id", None)
         await client.send_message(message.channel, "The diamond role has been disabled.")
             
-    elif message.content.lower().startswith(".config master ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config master") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Master", hoist=True)
             serv.config.update("master_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("master_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new master role is **{0}**".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -260,15 +260,15 @@ async def on_message(message):
         serv.config.update("master_id", None)
         await client.send_message(message.channel, "The master role has been disabled.")
             
-    elif message.content.lower().startswith(".config grandmaster ") and message.author.server_permissions.administrator:
+    elif message.content.lower().startswith(".config grandmaster") and message.author.server_permissions.administrator:
         if len(message.role_mentions) == 0:
             role = await client.create_role(message.author.server, name="Grandmaster", hoist=True)
             serv.config.update("grandmaster_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**".format(role.mention))
         elif len(message.role_mentions) == 1:
             role = message.role_mentions[0]
             serv.config.update("grandmaster_id", role.id)
-            await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**".format(message.role.mention))
+            await client.send_message(message.channel, "Config Updated! Your new grandmaster role is **{0}**".format(role.mention))
         elif len(message.role_mentions) > 1:
             await client.send_message(message.channel, "You mentioned too many roles in this command! Please try again using only one.")
 
@@ -296,7 +296,8 @@ async def on_message(message):
                         to_remove.append(get_role(message.author.server.roles, id=config["{0}_id".format(rank_name)]))
                 for role in to_remove:
                     await client.remove_roles(message.author, role)
-                await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
+                if config["{0}_id".format(rank)] != None:
+                    await client.add_roles(message.author, get_role(message.author.server.roles, id=config["{0}_id".format(rank)]))
         except Exception as ex:
             print(ex)
         
@@ -312,10 +313,13 @@ async def on_message(message):
 
         try:
             for hero, playtime_block in config["time"].items():
-                overall_hero_playtime = stats["heroes"]["playtime"]["quickplay"].get(hero, 0) +  stats"heroes"]["playtime"]["competitive"].get(hero, 0)
+                overall_hero_playtime = stats["heroes"]["playtime"]["quickplay"].get(hero, 0) +  stats["heroes"]["playtime"]["competitive"].get(hero, 0)
                 for key, attr in playtime_block.items():
                     if int(overall_hero_playtime) >= int(key):
                         await client.add_roles(message.author, get_role(message.author.server.roles, id=attr))
+                    else:
+                        await client.remove_roles(message.author, get_role(message.author.server.roles, id=attr))
+
         except Exception as ex:
             print(ex)
 client.run(auth.token)
